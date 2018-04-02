@@ -1,10 +1,3 @@
-Unit Testing means, well, testing individual units of behavior. An individual unit of behavior is the smallest possible unit of behavior that can be individually tested in isolation. (I know that those two definitions are circular, but they seem to work out quite well in practice.)
-
-The problem is that we don't capture the errors. We don't make test on every singles class.
-
-http://www.softwaretestingclass.com/difference-between-static-testing-and-dynamic-testing/
-
-http://misko.hevery.com/2008/12/15/static-methods-are-death-to-testability/
 # TestAssignmentProject2
 
 ## Testing Real Life Code
