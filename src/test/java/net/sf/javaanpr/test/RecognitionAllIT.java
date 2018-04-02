@@ -156,8 +156,6 @@ class RecognitionAllIT {
         Intelligence intel = new Intelligence();
         assertNotNull(intel);
         String spz = intel.recognize(carSnap);
-        //assertNotNull("The licence plate is null - are you sure the image has the correct color space?", spz);
-        //assertEquals(expectedResult, spz);
         assertThat(expectedResult, is(equalTo(spz)));
 
         carSnap.close();
@@ -175,8 +173,7 @@ class RecognitionAllIT {
         Intelligence intel = new Intelligence();
         assertNotNull(intel);
         String spz = intel.recognize(carSnap);
-        //assertNotNull("The licence plate is null - are you sure the image has the correct color space?", spz);
-        //assertEquals(expectedResult, spz);
+
         assertThat(spz, is(notNullValue()));
 
         carSnap.close();

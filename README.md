@@ -1,6 +1,8 @@
-# TestAssignmentProject2
+# TestAssignmentProject1
 
 ## Testing Real Life Code
+
+Original code here: https://github.com/oskopek/javaanpr.git  
 
 *You should (as a minimum):* 
  - Explain the purpose of the Test (what the original test exposed, and what your test exposes) 
@@ -8,6 +10,11 @@
  - Explain the topic Data Driven Testing, and why it often makes a lot of sense to read test data from a file. 
  - Your answers to the question; whether what you implemented was a Unit Test or a JUnit Test, the problems you might have discovered with the test and, your suggestions for ways this could have been fixed. 
  - The steps you took to include Hamcrest matchers in the project, and the difference they made for the test 
+ 
+ 
+
+ 
+ 
  
  
 ##### Explain the purpose of the Test (what the original test exposed, and what your test exposes) 
@@ -18,6 +25,66 @@ One such thing as logging out results instead of using asserts. And even though 
  
 ##### Explain about Parameterized Tests in JUnit and how you have used it in this exercise.
 
+
+
+I changed the test to a Parameterized test using JUnit 5. I have not focused on writing many test but rather implementing parameterized test that includes Hamcrest. I divided up the test into two test. See code snippet below. 
+
+- The *checkSigns* checks if the license pates are correct.
+- The*checkSignsForNulls* that captures where the license plates is null (can be interesting to distinguish).
+
+Even though the code looks like it's being dedicated it is important to have one unit test method focus on one thing (JUnit test best practise).
+  
+Hamcrest is used in the two important assertions we make in the two methods:
+
+```        
+    assertThat(expectedResult, is(equalTo(spz)));
+```    
+
+```        
+	assertThat(spz, is(notNullValue()));
+```    
+ 
+```
+
+    @DisplayName("Should check is licensplates are equal to testresults")
+    @ParameterizedTest(name = "{index} => image={0} extpected={1}")
+    @CsvFileSource(resources = "/results.csv", delimiter = '=')
+    void checkSigns(String image_path, String expectedResult) throws Exception {
+
+        final String image = "snapshots/"+ image_path;
+        CarSnapshot carSnap = new CarSnapshot(image);
+        assertNotNull("carSnap is null", carSnap);
+        assertNotNull("carSnap.image is null", carSnap.getImage());
+        Intelligence intel = new Intelligence();
+        assertNotNull(intel);
+        String spz = intel.recognize(carSnap);
+        assertThat(expectedResult, is(equalTo(spz)));
+
+        carSnap.close();
+
+    }
+    @DisplayName("Checks if any resulting lisence plates are null")
+    @ParameterizedTest(name = "{index} => image={0} extpected={1}")
+    @CsvFileSource(resources = "/results.csv", delimiter = '=')
+    void checkSignsForNulls(String image_path, String expectedResult) throws Exception {
+
+        final String image = "snapshots/"+ image_path;
+        CarSnapshot carSnap = new CarSnapshot(image);
+        assertNotNull("carSnap is null", carSnap);
+        assertNotNull("carSnap.image is null", carSnap.getImage());
+        Intelligence intel = new Intelligence();
+        assertNotNull(intel);
+        String spz = intel.recognize(carSnap);
+
+        assertThat(spz, is(notNullValue()));
+
+        carSnap.close();
+
+    }
+	
+	```
+
+
 Parameterized tests allow a developer to run the same test over and over again using different values. There are five steps that you need to follow to create a parameterized test.
 In JUnit, you can pass the parameters into the JUnit test via the following methods:
 
@@ -27,16 +94,19 @@ In JUnit, you can pass the parameters into the JUnit test via the following meth
 
 Because file "results" already consisted of the *image name* and the *expected license plate* separated by '=' I decided to just convert it to CSV file and use it as a source for my parameterized tests.
  
-I pass the parameters into the unit test method via the fiels injector. I use the annotation @CsvFileSource for the the data source. CSV file with delimiter '='.
+I pass the parameters into the unit test method via the fields injector. I use the annotation @CsvFileSource for the the data source. CSV file with delimiter '='.
 
 ``` 
-	@DisplayName("Checks if any resulting lisence plates are null")
-    @ParameterizedTest(name = "{index} => image={0} extpected={1}")
-    @CsvFileSource(resources = "/results.csv", delimiter = '=') 
-	void checkSignsForNulls(String image_path, String expectedResult) throws Exception 
+@DisplayName("Checks if any resulting lisence plates are null")
+@ParameterizedTest(name = "{index} => image={0} extpected={1}")
+@CsvFileSource(resources = "/results.csv", delimiter = '=') 
+void checkSignsForNulls(String image_path, String expectedResult) throws Exception 
 	
 ``` 
 
+
+A bonus with parameterized test is that we get to describe the test with the parameters in the description message.
+When the test fails we know exactly which image that failed and the value that was expected. This makes the debugging process much faster.
 
  
 ##### Explain the topic Data Driven Testing, and why it often makes a lot of sense to read test data from a file.
@@ -77,11 +147,32 @@ I believe that the tests are of the type functional unit test because we test if
  
  
 
-##### The steps you took to include Hamcrest matchers in the project, and the difference they made for the test *
+##### The steps you took to include Hamcrest matchers in the project, and the difference they made for the test
+ 
+See section *Explain about Parameterized Tests in JUnit and how you have used it in this exercise.* in regards to my implementation.
+
+Without Hamcrest we make imperative or write logic in statements.
+With Hamcrest we change the code from imperative to declarative code/assertions.
+
+With Hamcrest the tests are declarative, descriptive and easier to read.
+
+
+Making tests more readable is a good thing because tests can serve as documentation especially 
+for coders that take over the a code project. 
+
+
+
+ 
+##### Executed test cases  
  
  
- ##### Executed test cases  
+I used the IDE IntelliJ from Jetbrains and also upgraded to JUnit 5.
+
+Results:
+
+[![https://gyazo.com/dbc7acab9be352e0dac731d56907b2fc](https://i.gyazo.com/dbc7acab9be352e0dac731d56907b2fc.png)](https://gyazo.com/dbc7acab9be352e0dac731d56907b2fc)
+
+
  
- Referencese https://www.mkyong.com/unittest/junit-4-tutorial-6-parameterized-test/
  
  
