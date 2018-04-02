@@ -19,32 +19,36 @@ Original code here: https://github.com/oskopek/javaanpr.git
  
 ##### Explain the purpose of the Test (what the original test exposed, and what your test exposes) 
  
-The original JUnit test exposed that some inputs failed by logging out failed/correct results from the matching license plate.
-A very abstracted JUnit test that didn't capture which tests failed and why they failed. The test wasn't written in a typical best practice style.
-One such thing as logging out results instead of using asserts. And even though it was data driven test it didn't make use of JUnits parameterized tests.
+The original JUnit test exposed that some inputs failed by logging out failed/correct results from the matching license plate when running the JUnit test.
+The original test that didn't capture which tests failed and why they failed. 
+The test wasn't written in a typical best practice style.
+Not utilizing the JUnit framework correctly by logging out results instead of using assert statements. 
+And even though it was data driven test it didn't make use of JUnits Parameterized Tests.
  
 ##### Explain about Parameterized Tests in JUnit and how you have used it in this exercise.
 
+I changed the test to a Parameterized Test using JUnit 5 in a new class *RecognitionAllIT*. 
+I have not focused on writing many test but rather implementing Parameterized Test that includes Hamcrest. 
+I divided up the test into two test methods. See code snippet below. 
 
+- The test method *checkSigns* that checks if the license pates are correct.
+- The test method *checkSignsForNulls* that captures where the license plates is null (can be interesting to distinguish).
 
-I changed the test to a Parameterized test using JUnit 5. I have not focused on writing many test but rather implementing parameterized test that includes Hamcrest. I divided up the test into two test. See code snippet below. 
-
-- The *checkSigns* checks if the license pates are correct.
-- The*checkSignsForNulls* that captures where the license plates is null (can be interesting to distinguish).
-
-Even though the code looks like it's being dedicated it is important to have one unit test method focus on one thing (JUnit test best practise).
+Even though the code looks like it's being duplicated it is important to have one unit test method focus on one thing (JUnit test best practice).
   
 Hamcrest is used in the two important assertions we make in the two methods:
 
 ```        
     assertThat(expectedResult, is(equalTo(spz)));
-```    
-
-```        
+    
+        
 	assertThat(spz, is(notNullValue()));
-```    
- 
-```
+
+``` 
+	
+My implementation: 
+	
+``` 	
 
     @DisplayName("Should check is licensplates are equal to testresults")
     @ParameterizedTest(name = "{index} => image={0} extpected={1}")
@@ -85,14 +89,15 @@ Hamcrest is used in the two important assertions we make in the two methods:
 ```
 
 
-Parameterized tests allow a developer to run the same test over and over again using different values. There are five steps that you need to follow to create a parameterized test.
+Parameterized Tests allow a developer to run the same test over and over again using different values. 
+There are five steps that you need to follow to create a Parameterized Test.
 In JUnit, you can pass the parameters into the JUnit test via the following methods:
 
  - Constructor
  - Fields injection via @Parameter
 
 
-Because file "results" already consisted of the *image name* and the *expected license plate* separated by '=' I decided to just convert it to CSV file and use it as a source for my parameterized tests.
+Because file "results" already consisted of the *image name* and the *expected license plate* separated by '=' I decided to just convert it to CSV file and use it as a source for my Parameterized Tests.
  
 I pass the parameters into the unit test method via the fields injector. I use the annotation @CsvFileSource for the the data source. CSV file with delimiter '='.
 
@@ -105,18 +110,22 @@ void checkSignsForNulls(String image_path, String expectedResult) throws Excepti
 ``` 
 
 
-A bonus with parameterized test is that we get to describe the test with the parameters in the description message.
+A bonus with Parameterized Test is that we get to describe the test with the parameters in the description message.
 When the test fails we know exactly which image that failed and the value that was expected. This makes the debugging process much faster.
 
  
 ##### Explain the topic Data Driven Testing, and why it often makes a lot of sense to read test data from a file.
 
 *Data Driven Testing*
-Term from Wikipedia is: Data-driven testing (DDT) is a term used in the testing of computer software to describe testing done using a table of conditions directly as test inputs and verifiable outputs as well as the process where test environment settings and control are not hard-coded.
+Term from Wikipedia is: Data-driven testing (DDT) is a term used in the testing of computer 
+software to describe testing done using a table of conditions directly as test inputs and verifiable 
+outputs as well as the process where test environment settings and control are not hard-coded.
 
-This exactly what is needed to improve test coverage – test with different scenarios and different input data without hard-coding the scenario itself, but just feeding different input and expected output data to it.
+This exactly what is needed to improve test coverage – test with different scenarios and different 
+input data without hard-coding the scenario itself, but just feeding different input and expected output data to it.
  
-This makes the test very dynamic and fast for change updates and not only the developer of the test can understand and write test input and outputs. 
+This makes the test very dynamic and fast for change updates and not only the developer of the test can 
+understand and write test input and outputs. 
  
  
 ##### Your answers to the question; whether what you implemented was a Unit Test or a JUnit Test, the problems you might have discovered with the test and, your suggestions for ways this could have been fixed.
