@@ -1,6 +1,15 @@
-# TestAssignmentProject1
+# Midterm Assignment Project 1
+*Emmely Lundberg cph-el69*
 
-## Testing Real Life Code
+_______
+
+### Overview
+
+This assignment sets out to demonstrate an understanding of what the purpose of testing is, what parameterized tests. 
+It makes use of an existing project.
+
+
+#### Testing Real Life Code
 
 Original code here: https://github.com/oskopek/javaanpr.git  
 
@@ -17,7 +26,7 @@ Original code here: https://github.com/oskopek/javaanpr.git
  
  
  
-##### Explain the purpose of the Test (what the original test exposed, and what your test exposes) 
+##### 01) Explain the purpose of the Test (what the original test exposed, and what your test exposes) 
  
 The original JUnit test exposed that some inputs failed by logging out failed/correct results from the matching license plate when running the JUnit test.
 The original test that didn't capture which tests failed and why they failed. 
@@ -25,7 +34,7 @@ The test wasn't written in a typical best practice style.
 Not utilizing the JUnit framework correctly by logging out results instead of using assert statements. 
 And even though it was data driven test it didn't make use of JUnits Parameterized Tests.
  
-##### Explain about Parameterized Tests in JUnit and how you have used it in this exercise.
+##### 02) Explain about Parameterized Tests in JUnit and how you have used it in this exercise.
 
 I changed the test to a Parameterized Test using JUnit 5 in a new class *RecognitionAllIT*. 
 I have not focused on writing many test but rather implementing Parameterized Test that includes Hamcrest. 
@@ -114,7 +123,7 @@ A bonus with Parameterized Test is that we get to describe the test with the par
 When the test fails we know exactly which image that failed and the value that was expected. This makes the debugging process much faster.
 
  
-##### Explain the topic Data Driven Testing, and why it often makes a lot of sense to read test data from a file.
+##### 03) Explain the topic Data Driven Testing, and why it often makes a lot of sense to read test data from a file.
 
 *Data Driven Testing*
 Term from Wikipedia is: Data-driven testing (DDT) is a term used in the testing of computer 
@@ -128,7 +137,7 @@ This makes the test very dynamic and fast for change updates and not only the de
 understand and write test input and outputs. 
  
  
-##### Your answers to the question; whether what you implemented was a Unit Test or a JUnit Test, the problems you might have discovered with the test and, your suggestions for ways this could have been fixed.
+##### 04) Your answers to the question; whether what you implemented was a Unit Test or a JUnit Test, the problems you might have discovered with the test and, your suggestions for ways this could have been fixed.
  
  The test are unit test. Unit test concentrate on testing the code from the inside. 
 
@@ -156,7 +165,7 @@ I believe that the tests are of the type functional unit test because we test if
  
  
 
-##### The steps you took to include Hamcrest matchers in the project, and the difference they made for the test
+##### 05) The steps you took to include Hamcrest matchers in the project, and the difference they made for the test
  
 See section *Explain about Parameterized Tests in JUnit and how you have used it in this exercise.* in regards to my implementation.
 
@@ -172,7 +181,7 @@ for coders that take over the a code project.
 
 
  
-##### Executed test cases  
+#### 06) Executed test cases  
  
  
 I used the IDE IntelliJ from Jetbrains and also upgraded to JUnit 5.
